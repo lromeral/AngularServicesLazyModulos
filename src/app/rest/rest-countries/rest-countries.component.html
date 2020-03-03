@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-md-8">
+      <select class="form-control" name="paisElegido" [(ngModel)]="paisElegido">
+        <option *ngFor="let pais of paises" [ngValue]="pais.name">
+          {{ pais.name }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <button type="button" class="btn btn-block btn-info" (click)="verInfoPais()">Ver información de país</button>
+    </div>
+  </div>
+  
+  
+  <div class="row mt-4">
+    <div class="col-md-9">
+      <p-table #dt [columns]="cols" [value]="paises" [paginator]="true" [rows]="5">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'width': col.width}">
+              <p-sortIcon *ngIf="col.field !=''" [field]="col.field"></p-sortIcon>
+              {{col.header}}
+            </th>
+          </tr>
+          <tr>
+            <th *ngFor="let col of columns" [ngSwitch]="col.field">
+              <input *ngSwitchCase="'name'" style="width: 100%" pInputText type="text"
+                (input)="dt.filter($event.target.value, col.field, 'contains')">
+              <input *ngSwitchCase="'region'" style="width: 100%" pInputText type="text"
+                (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-pais>
+          <tr>
+            <td style="width:50px">
+              <img class="bandera" src={{pais.flag}} />
+            </td>
+            <td>{{pais.name}}</td>
+            <td>{{pais.capital}}</td>
+            <td style="text-align:right">{{pais.population | number}}</td>
+            <td>{{pais.region}}</td>
+            <td class="pl-1"><button type="button" pButton icon="pi pi-plus" (click)="verPais(pais)"></button></td>
+            <td class="pl-1"><button type="button" pButton (click)="geoLocalizar(gmap.getMap(),pais)" icon="pi pi-map-marker"></button></td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="col-md-3">
+      <p-gmap #gmap [options]="options" [overlays]="overlays" [style]="{'width':'100%','height':'320px'}"></p-gmap>
+    </div>
+  </div>

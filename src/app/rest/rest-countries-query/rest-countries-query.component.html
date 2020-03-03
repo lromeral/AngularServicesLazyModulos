@@ -1,0 +1,7 @@
+<div *ngIf="pais!=null">
+    <h1>{{pais[0].name}}</h1>
+    <p>{{pais[0].capital}}</p>
+    <p>{{pais[0].population | number}}</p>
+    <img class="bandera img-fluid" [src]="pais[0].flag"/>
+  </div>
+  

@@ -1,0 +1,16 @@
+<h2 *ngIf="infoMeteo.length!=0">{{ infoMeteo.city.name }}</h2>
+<div class="row">
+  <div class="col-md-2" *ngFor="let info of infoMeteo.list">
+    <div class="card" style="width: 18rem;">
+      <img class="card-img-top" src="http://openweathermap.org/img/w/{{info.weather[0].icon}}.png" alt="weather icon"
+      style="height: 60px; width: 60px;">
+      <div class="card-body">
+        <h5 class="card-title">{{info.dt *1000 | date: 'mediumDate'}}</h5>
+        <h6 class="card-title">{{info.weather[0].description}}</h6>
+        <span class="badge badge-danger">Máxima {{info.temp.max}}</span>
+        <br>
+        <span class="badge badge-success">Mínima {{info.temp.min}}</span>
+      </div>
+    </div>
+  </div>
+</div>
